@@ -8,6 +8,7 @@ public interface Constants {
     public final static String SUM = "restaurare";
     public final static String PROCESSING_THREAD_TAG = "1";
     public final static String actionType = "sendMessage";
-    public final static String BROADCAST_RECEIVER_EXTRA = "1";
     public final static String ServiceSUM = "service";
+    public final static String BROADCAST_RECEIVER_TAG = "broadcast_tag";
+    public final static String BROADCAST_SUM_KEY = "sdjhf";
 }

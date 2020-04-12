@@ -2,7 +2,9 @@ package ro.pub.cs.systems.eim.Colocviul1_245;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +17,9 @@ public class Colocviu1_245MainActivity extends AppCompatActivity {
     private Button computeButton;
     private EditText nextTerm;
     private EditText allTerms;
+    private IntentFilter intentFilter = new IntentFilter();
+
+    private MessageBroadcastReceiver broadcastReceiver = new MessageBroadcastReceiver();
 
     private ButtonClickListener buttonClickListener = new ButtonClickListener();
     private class ButtonClickListener implements View.OnClickListener {
@@ -67,6 +72,8 @@ public class Colocviu1_245MainActivity extends AppCompatActivity {
                 allTerms.setText(String.valueOf(0));
             }
         }
+        intentFilter.addAction(Constants.actionType);
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -76,7 +83,8 @@ public class Colocviu1_245MainActivity extends AppCompatActivity {
             if (Integer.parseInt(allTerms.getText().toString()) > 10) {
                 Intent serviceIntent = new Intent(getApplicationContext(), Colocviu1_245Service.class);
                 serviceIntent.putExtra(Constants.ServiceSUM, allTerms.getText().toString());
-                getApplicationContext().startService(intent);
+                serviceIntent.setComponent(new ComponentName(this, Colocviu1_245Service.class));
+                startService(serviceIntent);
             }
         }
     }
@@ -93,6 +101,22 @@ public class Colocviu1_245MainActivity extends AppCompatActivity {
         } else {
             allTerms.setText(String.valueOf(0));
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // TODO: exercise 8c - register the broadcast receiver with the corresponding intent filter
+        registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        // TODO: exercise 8c - unregister the broadcast receiver
+        unregisterReceiver(broadcastReceiver);
+
+        super.onPause();
     }
 
     @Override

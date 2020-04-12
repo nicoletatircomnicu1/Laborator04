@@ -32,7 +32,7 @@ public class ProcessingThread extends Thread {
     private void sendMessage() {
         Intent intent = new Intent();
         intent.setAction(Constants.actionType);
-        intent.putExtra(Constants.BROADCAST_RECEIVER_EXTRA,
+        intent.putExtra(Constants.ServiceSUM,
                 new Date(System.currentTimeMillis()) + " " + sum);
         context.sendBroadcast(intent);
     }

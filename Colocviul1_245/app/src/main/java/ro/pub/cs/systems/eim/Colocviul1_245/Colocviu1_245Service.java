@@ -11,7 +11,7 @@ public class Colocviu1_245Service extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        int sum = intent.getIntExtra(Constants.ServiceSUM, -1);
+        int sum = Integer.valueOf(intent.getIntExtra(Constants.ServiceSUM, -1));
         processingThread = new ProcessingThread(this, sum);
         processingThread.start();
         return Service.START_REDELIVER_INTENT;
